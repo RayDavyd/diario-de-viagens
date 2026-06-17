@@ -82,3 +82,47 @@ document.getElementById("formNovaViagem").addEventListener("submit", function(e)
   alert("Viagem salva com sucesso!");
   mostrarViagens();
 });
+
+function mostrarViagens() {
+  const lista = carregar();
+
+  lista.sort((a, b) => new Date(a.dataViagem) - new Date(b.dataViagem));
+
+  const listaConvertida = lista.map(function(v) {
+    let valorBRL = v.custo > 0 && TAXAS[v.moeda] ? v.custo * TAXAS[v.moeda] : 0;
+    const textoCusto = v.custo > 0
+      ? v.custo + " " + v.moeda + " = R$ " + valorBRL.toFixed(2)
+      : "Custo não informado";
+    return { ...v, textoCusto };
+  });
+
+  const container = document.getElementById("lista-viagens");
+  container.innerHTML = "";
+
+  listaConvertida.forEach(function(viagem) {
+    const card = document.createElement("div");
+    card.id = "card-" + viagem.id;
+    card.className = "trip-card";
+
+    card.innerHTML =
+      "<h2>" + viagem.destino + "</h2>" +
+      "<div class='currency-box' style='margin-bottom:15px;'>" +
+        "<p><b>Data:</b> " + viagem.dataViagem + "</p>" +
+        "<p><b>Custo Estimado:</b><br>" + viagem.textoCusto + "</p>" +
+      "</div>" +
+      "<div class='input-group'>" +
+        "<label style='color:#A8D8EA'>Checklist de Mala (<span id='progresso-" + viagem.id + "'></span>)</label>" +
+        "<div id='mala-" + viagem.id + "' style='background:rgba(255,255,255,0.05); padding:10px; border-radius:10px; margin-bottom:10px;'></div>" +
+      "</div>" +
+      "<div class='input-group'>" +
+        "<div class='item-box'>" +
+          "<input id='novo-item-" + viagem.id + "' type='text' placeholder='Novo item na mala'>" +
+          "<button type='button' onclick='addItemMala(" + viagem.id + ")'>+</button>" +
+        "</div>" +
+      "</div>" +
+      "<button class='btn-excluir' onclick='removerViagem(" + viagem.id + ")'>Excluir Viagem</button>";
+
+    container.appendChild(card);
+    mostrarMala(viagem.id, viagem.mala);
+  });
+}
