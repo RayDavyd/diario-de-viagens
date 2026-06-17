@@ -60,3 +60,25 @@ function removerTemp(i) {
   malaTemp.splice(i, 1);
   mostrarPreviewMala();
 }
+
+document.getElementById("formNovaViagem").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const destino = document.getElementById("inputDestino").value.trim();
+  const data    = document.getElementById("inputData").value;
+  const moeda   = document.getElementById("selectMoeda").value;
+  const custo   = parseFloat(document.getElementById("inputCusto").value) || 0;
+
+  if (destino.length < 2) { alert("Coloque um destino válido."); return; }
+  if (data === "")        { alert("Coloque a data da viagem.");   return; }
+
+  const lista = carregar();
+  lista.push({ id: Date.now(), destino, dataViagem: data, moeda, custo, mala: malaTemp });
+  salvar(lista);
+
+  e.target.reset();
+  malaTemp = [];
+  mostrarPreviewMala();
+  alert("Viagem salva com sucesso!");
+  mostrarViagens();
+});
