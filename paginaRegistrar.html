@@ -28,6 +28,35 @@
     <h2>Registrar Viagem</h2>
     <p>Preencha os dados abaixo para salvar sua próxima aventura.</p>
   </div>
+
+  <div class="trip-card">
+  <h2>+ Nova Viagem</h2>
+  <form id="formNovaViagem">
+    <div class="input-group">
+      <label>Destino</label>
+      <input type="text" id="inputDestino" placeholder="Ex: Tóquio, Lisboa...">
+    </div>
+    <div class="row">
+      <div class="input-group">
+        <label>Data da Viagem</label>
+        <input type="date" id="inputData">
+      </div>
+      <div class="input-group">
+        <label>Moeda</label>
+        <select id="selectMoeda" class="input-color">
+          <option>Selecione</option>
+          <option>BRL</option>
+          <option>USD</option>
+          <option>EUR</option>
+        </select>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Custo Estimado</label>
+      <input type="number" id="inputCusto" placeholder="0,00">
+    </div>
+  </form>
+</div>
 </section>
 
 </body>
