@@ -24,3 +24,14 @@ const dadosIniciais = [
     ]
   }
 ];
+
+let malaTemp = [];
+
+function carregar() {
+  const dados = localStorage.getItem("viagens");
+  return dados ? JSON.parse(dados) : dadosIniciais;
+}
+
+function salvar(lista) {
+  localStorage.setItem("viagens", JSON.stringify(lista));
+}
