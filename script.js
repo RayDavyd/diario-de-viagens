@@ -35,3 +35,28 @@ function carregar() {
 function salvar(lista) {
   localStorage.setItem("viagens", JSON.stringify(lista));
 }
+
+document.getElementById("btnAdicionarItem").addEventListener("click", adicionarItemForm);
+
+function adicionarItemForm() {
+  const input = document.getElementById("inputItemMala");
+  const texto = input.value.trim();
+  if (texto === "") return;
+  malaTemp.push({ item: texto, checado: false });
+  input.value = "";
+  mostrarPreviewMala();
+}
+
+function mostrarPreviewMala() {
+  const box = document.getElementById("listaMalaTemporaria");
+  box.innerHTML = "";
+  malaTemp.forEach(function(item, i) {
+    box.innerHTML += "<li style='color:#cce0ec; margin-bottom:4px;'>" + item.item +
+      " <b style='cursor:pointer; color:#e05252; font-size:1.1rem;' onclick='removerTemp(" + i + ")'>×</b></li>";
+  });
+}
+
+function removerTemp(i) {
+  malaTemp.splice(i, 1);
+  mostrarPreviewMala();
+}
