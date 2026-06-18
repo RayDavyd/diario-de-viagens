@@ -177,3 +177,13 @@ function addItemMala(id) {
   input.value = "";
   mostrarMala(id, viagem.mala);
 }
+
+function removerViagem(id) {
+  if (confirm("Tem certeza que deseja apagar esta viagem?")) {
+    const lista = carregar().filter(v => v.id !== id);
+    salvar(lista);
+    mostrarViagens();
+  }
+}
+
+mostrarViagens();
