@@ -157,3 +157,11 @@ function mostrarMala(id, mala) {
   const marcados = mala.filter(i => i.checado).length;
   document.getElementById("progresso-" + id).textContent = marcados + " / " + total;
 }
+
+function marcarItem(idViagem, idx) {
+  const lista  = carregar();
+  const viagem = lista.find(v => v.id === idViagem);
+  viagem.mala[idx].checado = !viagem.mala[idx].checado;
+  salvar(lista);
+  mostrarMala(idViagem, viagem.mala);
+}
