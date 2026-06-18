@@ -165,3 +165,15 @@ function marcarItem(idViagem, idx) {
   salvar(lista);
   mostrarMala(idViagem, viagem.mala);
 }
+
+function addItemMala(id) {
+  const input = document.getElementById("novo-item-" + id);
+  const texto = input.value.trim();
+  if (texto === "") return;
+  const lista  = carregar();
+  const viagem = lista.find(v => v.id === id);
+  viagem.mala.push({ item: texto, checado: false });
+  salvar(lista);
+  input.value = "";
+  mostrarMala(id, viagem.mala);
+}
