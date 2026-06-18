@@ -126,3 +126,34 @@ function mostrarViagens() {
     mostrarMala(viagem.id, viagem.mala);
   });
 }
+
+function mostrarMala(id, mala) {
+  const box = document.getElementById("mala-" + id);
+  if (!box) return;
+  box.innerHTML = "";
+
+  mala.forEach(function(item, idx) {
+    const el = document.createElement("div");
+    el.style.cssText = "display:flex; align-items:center; gap:8px; margin-bottom:5px;";
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = item.checado;
+    cb.style.cursor = "pointer";
+
+    const lbl = document.createElement("span");
+    lbl.textContent = item.item;
+    lbl.style.color = item.checado ? "#888" : "#ddd";
+    lbl.style.textDecoration = item.checado ? "line-through" : "none";
+
+    cb.addEventListener("change", () => marcarItem(id, idx));
+
+    el.appendChild(cb);
+    el.appendChild(lbl);
+    box.appendChild(el);
+  });
+
+  const total    = mala.length;
+  const marcados = mala.filter(i => i.checado).length;
+  document.getElementById("progresso-" + id).textContent = marcados + " / " + total;
+}
