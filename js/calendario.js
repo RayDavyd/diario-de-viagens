@@ -117,6 +117,11 @@ function renderizarCalendario() {
         const diaFormatado = String(dia).padStart(2, '0');
         const dataStringCelula = `${anoVisivel}-${mesFormatado}-${diaFormatado}`;
         
+        // Verifica se esta célula é o dia de hoje
+        const dataCelulaObjeto = new Date(anoVisivel, mesVisivel, dia);
+        dataCelulaObjeto.setHours(0, 0, 0, 0);
+        const ehHoje = dataCelulaObjeto.getTime() === hoje.getTime();
+
         // Filtra todas as viagens deste dia específico
         const viagemDoDia = viagens.find(v => v.dataViagem === dataStringCelula);
         
@@ -136,6 +141,14 @@ function renderizarCalendario() {
             celulaDia.addEventListener("click", function() {
                 exibirDetalhesViagem(viagemDoDia);
             });
+        }
+
+        // Marca o dia de hoje por cima (mesmo que também tenha viagem)
+        if (ehHoje) {
+            celulaDia.classList.add("today");
+            celulaDia.title = viagemDoDia
+                ? `Hoje — Destino: ${viagemDoDia.destino}`
+                : "Hoje";
         }
         
         gridDias.appendChild(celulaDia);
